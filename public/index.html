@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>socket</title>
+</head>
+
+<body>
+
+<div style="margin: 0 auto;">
+
+<video autoplay id="local" style="border:1px solid black" width="320" height="240" controls muted></video>
+<video autoplay id="remote" style="border:1px solid black" width="320" height="240" controls></video>
+</div>
+
+<button id="joinBtn">进入房间</button>
+
+<div>
+  UserId <input type="number" id='userid'/>
+</div>
+
+
+</body>
+<script type="text/javascript" src="/js/socket.io.js"></script>
+<script type="text/javascript" src="/js/client.js"></script>
+</html>
