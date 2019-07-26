@@ -1,6 +1,5 @@
 'use strict';
 
-var localStream;
 var pc1;
 const offerOptions = {
   offerToReceiveAudio: 1,
@@ -10,6 +9,9 @@ const offerOptions = {
 const constraints = window.constraints = {
   video: { width: 320, height: 240, frameRate: 13},
   audio: true,
+};
+const constraints_video = window.constraints = {
+  video: { width: 640, height: 480, frameRate: 15},
 };
 
 const configuration = {
@@ -23,12 +25,14 @@ const configuration = {
 
 document.querySelector('#userid').value = randomString(9);
 
-var socket=io.connect('localhost:3011'),//与服务器进行连接
-    joinBtn=document.getElementById('joinBtn');
+var socket=io.connect('10.1.137.146:3011');//与服务器进行连接
+var joinBtn=document.getElementById('joinBtn');
 
 const remoteVideo = document.getElementById('remote');
 
 joinBtn.addEventListener('click', join);
+
+//refer https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpSender/replaceTrack
 
 async function join() {
   joinBtn.disabled = true;
@@ -48,7 +52,7 @@ async function getLocalMedia() {
     const video = document.getElementById('local');
     video.srcObject = stream;
     video.autoplay = true;
-    localStream = stream;
+    window.stream = stream;
   } catch (e) {
     alert(`getUserMedia() error: ${e.name}`);
   }
@@ -56,8 +60,8 @@ async function getLocalMedia() {
 
 async function initPeer() {
   console.log('Starting call');
-  const videoTracks = localStream.getVideoTracks();
-  const audioTracks = localStream.getAudioTracks();
+  const videoTracks = window.stream.getVideoTracks();
+  const audioTracks = window.stream.getAudioTracks();
   if (videoTracks.length > 0) {
     console.log(`Using video device: ${videoTracks[0].label}`);
   }
@@ -67,11 +71,12 @@ async function initPeer() {
 
   console.log('RTCPeerConnection configuration:', configuration);
   pc1 = new RTCPeerConnection(configuration);
+  window.pc1 = pc1;  
 
   console.log('Created local peer connection object pc1');
   pc1.addEventListener('icecandidate', e => onIceCandidate(pc1, e));
   pc1.addEventListener('iceconnectionstatechange', e => onIceStateChange(pc1, e));
-  pc1.addEventListener('negotiationneeded', e => {});
+  pc1.addEventListener('negotiationneeded', e => { console.log(e); });
   pc1.addEventListener('icecandidateerror', e => {});
   pc1.addEventListener('signalingstatechange', e => {});
   pc1.addEventListener('iceconnectionstatechange', e => {});
@@ -80,7 +85,7 @@ async function initPeer() {
 
 
   pc1.addEventListener('track', e => gotRemoteStream(e));
-  localStream.getTracks().forEach(track => pc1.addTrack(track, localStream));
+  window.stream.getTracks().forEach(track => pc1.addTrack(track, window.stream));
   console.log('Added local stream to pc1');
 }
 
@@ -151,8 +156,6 @@ function randomString(strLength) {
   }
   return result.join("");
 }
-
-
 
 var BandwidthHandler = (function() {
     function setBAS(sdp, bandwidth, isScreen) {

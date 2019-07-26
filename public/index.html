@@ -8,12 +8,25 @@
 <body>
 
 <div style="margin: 0 auto;">
-
 <video autoplay id="local" style="border:1px solid black" width="320" height="240" controls muted></video>
 <video autoplay id="remote" style="border:1px solid black" width="320" height="240" controls></video>
 </div>
 
+<div class="select">
+    <label for="audioSource">音频输入: </label><select id="audioSource"></select>
+</div>
+
+<div class="select">
+    <label for="audioOutput">音频输出: </label><select id="audioOutput"></select>
+</div>
+
+<div class="select">
+    <label for="videoSource">视频输入: </label><select id="videoSource"></select>
+</div>
+
 <button id="joinBtn">进入房间</button>
+<button id="stopAudioBtn">停止音频</button>
+<button id="removeAudioBtn">移除音频</button>
 
 <div>
   UserId <input type="number" id='userid'/>
@@ -23,4 +36,5 @@
 </body>
 <script type="text/javascript" src="/js/socket.io.js"></script>
 <script type="text/javascript" src="/js/client.js"></script>
+<script type="text/javascript" src="/js/device.js"></script>
 </html>
