@@ -9,3 +9,7 @@
 
 ### Run
 > node server.js 
+> https://localhost:3011/
+
+### Other
+> you can change localhost to your public IP

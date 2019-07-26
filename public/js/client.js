@@ -14,16 +14,16 @@ const constraints = window.constraints = {
 
 const configuration = {
       sdpSemantics: 'plan-b',
-      iceRelay: false,
-      iceServer:[
-          {url: "turn:192.168.170.66:3478", username: "", credential: ""},
+      iceTransportPolicy: 'all',
+      iceServers:[
+          {url: "turn:95.169.5.200:3478", username: "jaygno", credential: "R0RFAKAI8F"},
           {url: "stun:webcs.agora.io:3478"}
       ]
 }
 
 document.querySelector('#userid').value = randomString(9);
 
-var socket=io.connect('10.1.133.155:3011'),//与服务器进行连接
+var socket=io.connect('localhost:3011'),//与服务器进行连接
     joinBtn=document.getElementById('joinBtn');
 
 const remoteVideo = document.getElementById('remote');
