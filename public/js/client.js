@@ -25,7 +25,7 @@ const configuration = {
 
 document.querySelector('#userid').value = randomString(9);
 
-var socket=io.connect('10.1.137.146:3011');//与服务器进行连接
+var socket=io.connect(document.querySelector('#socketio').value);//与服务器进行连接
 var joinBtn=document.getElementById('joinBtn');
 
 const remoteVideo = document.getElementById('remote');
@@ -35,10 +35,12 @@ joinBtn.addEventListener('click', join);
 //refer https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpSender/replaceTrack
 
 async function join() {
+  console.time("join");  
   joinBtn.disabled = true;
   var userId = document.querySelector('#userid').value;
 
   await getLocalMedia();
+  console.timeEnd("join");  
   await initPeer();
 
   socket.emit('join', userId);
