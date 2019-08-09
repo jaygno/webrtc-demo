@@ -3,6 +3,7 @@
 - Only test on chrome.   
 - Support https.  
 - Socket.io. 
+- Only support two user.
 
 ### Install
 > npm install
