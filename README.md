@@ -9,7 +9,7 @@
 > npm install
 
 ### Run
-> node server.js 
+> node server.js.   
 > https://localhost:3011/
 
 ### Other
