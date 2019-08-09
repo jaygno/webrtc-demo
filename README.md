@@ -14,3 +14,6 @@
 
 ### Other
 > you can change localhost to your public IP
+
+### Ref
+  ![Alt text](https://github.com/jaygno/webrtc-demo/blob/master/public/img/localhost_p2p_latency.png)
